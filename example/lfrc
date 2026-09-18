@@ -1,0 +1,110 @@
+#############################################################
+# General Shell Configuration
+#############################################################
+
+# Use cmd as the default shell wrapper
+set shell "cmd"
+set shellflag "/c"
+
+# Use PowerShell when invoking shell manually
+map w $powershell
+
+# Use Enter key to execute a shell command on the current file
+map <enter> shell
+
+#############################################################
+# UI and Display Settings
+#############################################################
+
+# Leave 10 lines of padding at the top and bottom of the screen when scrolling
+set scrolloff 10
+
+# Default layout and display options
+set ratios 1:3:2
+set info size:ctime
+set preview true
+
+# Layout toggles
+map zz :set ratios 1:3:2; set info size:ctime; set preview
+map zp :set ratios 1:5; set info; set preview
+map zn :set nopreview; set ratios 1:3; set info perm:size:ctime
+map zm :set nopreview; set ratios 1; set info size:ctime
+
+# Set timestamp format
+set infotimefmtnew 'Jan 02 15:04:05      '
+set infotimefmtold 'Jan 02 15:04:05 2006'
+set timefmt 'Jan 02 15:04:05 2006'
+
+# Show hidden files
+set hidden true
+
+# Set previewer binary
+set previewer ~/bin/lf-preview.exe
+
+#############################################################
+# Basic File Operations
+#############################################################
+
+map x %lf-helper lf-trash.ps1
+map X delete
+map n %lf-helper lf-create-new-file.ps1
+map N %lf-helper lf-create-new-directory.ps1
+map C %lf-helper lf-compress.ps1
+map U %lf-helper lf-uncompress.ps1
+map Y %lf-helper lf-copy-with-timestamp.ps1
+map R %lf-helper lf-rename-with-timestamp.ps1
+map t :tag-toggle; down
+map I %lf-helper lf-inspect.ps1
+map m %lf-helper lf-compress.ps1
+
+#############################################################
+# File Launching & External Tools
+#############################################################
+
+# Open files using system start
+cmd open $start %f%
+map o open
+
+# Open file in nvim or VSCode
+map e $nvim %f%
+map E $code %f%
+
+# Use bat to view files
+map <a-v> $bat %f%
+
+# Display lf documentation
+cmd doc $lf -doc | less
+
+# Open image file
+map <a-i> $picview %f%
+
+#############################################################
+# Navigation
+#############################################################
+
+map <a-h> jump-next
+map <a-l> jump-prev
+
+# Quick directory navigation
+map bo cd '~/OneDrive'
+map bl cd '~/AppData/Roaming/lf'
+
+# Reload lf configuration and redraw screen
+map <f-5> :reload; redraw
+
+#############################################################
+# Sorting
+#############################################################
+
+map sn :set sortby natural
+map ss :set sortby size
+map st :set sortby ctime
+map se :set sortby ext
+map sr :set reverse!
+
+#############################################################
+# zoxide Integration
+#############################################################
+
+cmd z ${{lf-z}}
+cmd zi ${{lf-zi}}
